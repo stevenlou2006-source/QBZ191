@@ -257,8 +257,8 @@ public static class QBZ191Builder
                 var emptyClip = AssetDatabase.LoadAssetAtPath<AudioClip>(GEN_DIR + "/QBZ191 Empty.wav");
                 if (shootClip != null)
                 {
-                    SetSound(gun, "soundShoot", shootClip, 1f);
-                    SetSound(gun, "soundShootGlobal", shootClip, 0.75f);
+                    SetSound(gun, "soundShoot", shootClip, 1f, 0.35f, 2.5f);
+                    SetSound(gun, "soundShootGlobal", shootClip, 0.9f, 0.5f, 2.5f);
                     SetSound(gun, "soundHit", emptyClip, 0.5f);
                 }
                 if (emptyClip != null) SetSound(gun, "soundNoAmmoClick", emptyClip, 0.6f);
@@ -522,7 +522,7 @@ public static class QBZ191Builder
         catch (Exception e) { Debug.LogWarning("[QBZ191] 处理 Always Included Shader 失败: " + e.Message); }
     }
 
-    static void SetSound(UnityEngine.Object target, string field, AudioClip clip, float volume)
+    static void SetSound(UnityEngine.Object target, string field, AudioClip clip, float volume, float spatialBlend = -1f, float falloff = -1f)
     {
         try
         {
@@ -535,6 +535,16 @@ public static class QBZ191Builder
             }
             var vol = so.FindProperty(field + ".Volume");
             if (vol != null) vol.floatValue = volume;
+            if (spatialBlend >= 0f)
+            {
+                var sb = so.FindProperty(field + ".SpatialBlend");
+                if (sb != null) sb.floatValue = spatialBlend;
+            }
+            if (falloff > 0f)
+            {
+                var fo = so.FindProperty(field + ".FalloffMultiplier");
+                if (fo != null) fo.floatValue = falloff;
+            }
             so.ApplyModifiedPropertiesWithoutUndo();
         }
         catch { }
