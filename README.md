@@ -61,4 +61,4 @@ csc / MSBuild QBZ191Simple.csproj
 
 - [REPOLib](https://github.com/ZehsTeam/REPOLib) — 物品注册与 bundle 加载
 - [R.E.P.O. Modding Wiki](https://repomods.com/) — Unity 工程与 SDK 流程
-- 枪声：合成音效（本仓库自带，无第三方素材）
+- 枪声：**M1 Garand Single** by Mike Koenig（[SoundBible](https://soundbible.com/1547-M1-Garand-Single.html)，CC BY 3.0），已裁为 0.30 秒单发
