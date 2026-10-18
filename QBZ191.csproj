@@ -7,8 +7,8 @@
     <ProjectGuid>{9C3D2B77-1A4E-4B7C-9F1D-2A6E8C5B0D31}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QBZ191Simple</RootNamespace>
-    <AssemblyName>QBZ191Simple</AssemblyName>
+    <RootNamespace>QBZ191</RootNamespace>
+    <AssemblyName>QBZ191</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -43,7 +43,7 @@
     <Reference Include="UnityEngine.CoreModule"><HintPath>..\UnityEngine.CoreModule.dll</HintPath></Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="QBZ191Simple.cs" />
+    <Compile Include="QBZ191.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

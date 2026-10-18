@@ -4,7 +4,7 @@ using BepInEx;
 using HarmonyLib;
 using UnityEngine;
 
-namespace QBZ191Simple
+namespace QBZ191
 {
     /// <summary>
     /// QBZ-191 真·半自动（按一下打一发）。
@@ -16,7 +16,7 @@ namespace QBZ191Simple
     /// 这样下一发必须重新按一下扳机 → 严格 1 次按键 = 1 发。
     /// 只影响名字里带 QBZ191 的物品。
     /// </summary>
-    [BepInPlugin("cn_xc.QBZ191Simple", "QBZ-191 SemiAuto", "0.1.0")]
+    [BepInPlugin("cn_xc.QBZ191", "QBZ-191", "0.1.0")]
     public class Plugin : BaseUnityPlugin
     {
         private Harmony _harmony;
@@ -30,15 +30,15 @@ namespace QBZ191Simple
                 _toggleItem = AccessTools.Method(typeof(ItemToggle), "ToggleItem", new Type[] { typeof(bool), typeof(int) });
                 try { _localViewId = AccessTools.Method(typeof(SemiFunc), "PhotonViewIDPlayerAvatarLocal"); } catch { }
                 MethodInfo shoot = AccessTools.Method(typeof(ItemGun), "Shoot", new Type[0]);
-                _harmony = new Harmony("cn_xc.QBZ191Simple");
+                _harmony = new Harmony("cn_xc.QBZ191");
                 if (shoot != null && _toggleItem != null)
                 {
                     _harmony.Patch(shoot, null, new HarmonyMethod(typeof(Plugin).GetMethod("ShootPostfix", BindingFlags.Static | BindingFlags.NonPublic)));
-                    Logger.LogInfo("QBZ-191 半自动补丁已加载（Shoot 后置复位）。");
+                    Logger.LogInfo("QBZ-191 半自动已加载（Shoot 后置复位）。");
                 }
                 else
                 {
-                    Logger.LogWarning("QBZ-191 半自动补丁：找不到 ItemGun.Shoot 或 ItemToggle.ToggleItem。");
+                    Logger.LogWarning("QBZ-191 半自动：找不到 ItemGun.Shoot 或 ItemToggle.ToggleItem。");
                 }
             }
             catch (Exception ex)

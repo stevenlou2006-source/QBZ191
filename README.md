@@ -1,4 +1,4 @@
-# QBZ191Simple
+# QBZ191
 
 给 **R.E.P.O.** 加一把可购买、可开枪的 **QBZ-191** 步枪。
 
@@ -28,7 +28,7 @@
 ## 安装
 
 1. 安装 BepInEx 与 REPOLib
-2. 把 `QBZ191.repobundle` 和 `QBZ191Simple.dll` 放进 `BepInEx/plugins/cn_xc-QBZ191/`
+2. 把 `QBZ191.repobundle` 和 `QBZ191.dll` 放进 `BepInEx/plugins/cn_xc-QBZ191/`
 3. 启动游戏，商店里会多出 `QBZ-191`
 
 ## 已知限制
