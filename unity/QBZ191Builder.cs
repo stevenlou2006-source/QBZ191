@@ -81,15 +81,9 @@ public static class QBZ191Builder
             }
             Debug.Log("[QBZ191] 替换粒子材质 " + psrCount + " 个，线条材质 " + lrCount + " 个");
 
-            // 删掉原版电池 UI（Canvas + TMP 字体）：其字体材质的 shader 不在包内会渲染成紫红色，且对物品无意义
-            int canvasKilled = 0;
-            foreach (var canvas in root.GetComponentsInChildren<Canvas>(true))
-            {
-                if (canvas == null) continue;
-                UnityEngine.Object.DestroyImmediate(canvas.gameObject);
-                canvasKilled++;
-            }
-            if (canvasKilled > 0) Debug.Log("[QBZ191] 已移除原版 UI Canvas " + canvasKilled + " 个（含电池 UI 文字）");
+            // 电池 UI Canvas 保持原版不动：ItemBattery.Update() 每帧都会调用 Canvas 上的 BatteryVisualLogic，
+            // 任何删除/隐藏都可能导致空引用（另有 Solar Batteries Fixed 也会改 ItemBattery.Update）。
+            // 代价：电池格上的 TMP 文字可能显示异常（TMP shader 未随包），但不影响功能。
 
             // 删掉原版模型前：先记录原版视觉的局部变换与世界尺寸（用来对齐我们的模型）
             Transform vanillaVisual = null;
@@ -220,7 +214,6 @@ public static class QBZ191Builder
                 SetPriv(battery, "batteryBars", 30);        // 弹药格数：明确 30
                 SetPriv(battery, "batteryLife", 100f);
                 SetPriv(battery, "batteryDrainRate", 1f);
-                SetPriv(battery, "hasBatteryVisuals", false);
                 EditorUtility.SetDirty(battery);
                 Debug.Log("[QBZ191] 电池：格数=30 电量=100");
             }
