@@ -1,0 +1,7 @@
+bin/
+obj/
+*.pdb
+*.user
+# 游戏/框架 DLL 不入库
+*.dll
+!dist/*.dll
