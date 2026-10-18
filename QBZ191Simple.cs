@@ -16,7 +16,7 @@ namespace QBZ191Simple
     /// 这样下一发必须重新按一下扳机 → 严格 1 次按键 = 1 发。
     /// 只影响名字里带 QBZ191 的物品。
     /// </summary>
-    [BepInPlugin("cn_xc.QBZ191Simple", "QBZ-191 SemiAuto", "1.2.0")]
+    [BepInPlugin("cn_xc.QBZ191Simple", "QBZ-191 SemiAuto", "0.1.0")]
     public class Plugin : BaseUnityPlugin
     {
         private Harmony _harmony;

@@ -273,7 +273,7 @@ public static class QBZ191Builder
             mod.name = "Mod QBZ191";
             SetPriv(mod, "_name", "QBZ191");
             SetPriv(mod, "_author", "cn_xc");
-            SetPriv(mod, "_version", "1.0.0");
+            SetPriv(mod, "_version", "0.1.0");
             SetPriv(mod, "_description", "QBZ-191 rifle");
             SaveAsset(mod, "Mod QBZ191.asset");
 

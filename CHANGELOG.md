@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.0]
+## [0.1.0]
 
 ### 新增
 - QBZ-191 自定义枪械物品（REPOLib Content 注册，`.repobundle` 自包含）
