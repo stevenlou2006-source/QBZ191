@@ -353,9 +353,10 @@ public static class QBZ191Builder
     {
         var flash = new GameObject("MuzzleFlash");
         flash.AddComponent<ItemGunMuzzleFlash>();
-        AddPs(flash, "Particle Smoke", new Color(0.55f, 0.55f, 0.55f, 0.45f), partMat);
-        AddPs(flash, "Particle Impact", new Color(1f, 0.65f, 0.25f, 0.9f), partMat);
-        AddPs(flash, "Particle Sparks", new Color(1f, 0.85f, 0.45f, 1f), partMat);
+        // 收紧：寿命 0.07~0.09s、速度 0.6~1.2、粒子更大更密、锥角 8° —— 看起来是一团枪口焰，不是散开的烟
+        AddPs(flash, "Particle Smoke", new Color(0.75f, 0.72f, 0.68f, 0.35f), partMat, 0.09f, 0.7f, 0.20f, 6);
+        AddPs(flash, "Particle Impact", new Color(1f, 0.55f, 0.12f, 0.95f), partMat, 0.08f, 1.1f, 0.28f, 14);
+        AddPs(flash, "Particle Sparks", new Color(1f, 0.9f, 0.55f, 1f), partMat, 0.07f, 1.6f, 0.12f, 22);
         var lightGo = new GameObject("Shoot Light");
         lightGo.transform.SetParent(flash.transform, false);
         var l = lightGo.AddComponent<Light>();
@@ -434,21 +435,25 @@ public static class QBZ191Builder
         return SavePrefab(bullet, "Bullet.prefab");
     }
 
-    static void AddPs(GameObject parent, string name, Color color, Material mat)
+    static void AddPs(GameObject parent, string name, Color color, Material mat, float life = 0.25f, float speed = 3f, float size = 0.08f, int count = 8)
     {
         var go = new GameObject(name);
         go.transform.SetParent(parent.transform, false);
         var ps = go.AddComponent<ParticleSystem>();
         var main = ps.main;
         main.startColor = color;
-        main.startLifetime = 0.25f;
-        main.startSpeed = 3f;
-        main.startSize = 0.08f;
-        main.duration = 0.2f;
+        main.startLifetime = life;
+        main.startSpeed = speed;
+        main.startSize = size;
+        main.duration = 0.12f;
         main.loop = false;
+        var shape = ps.shape;
+        shape.shapeType = ParticleSystemShapeType.Cone;
+        shape.angle = 8f;
+        shape.radius = 0.01f;
         var em = ps.emission;
         em.rateOverTime = 0f;
-        em.SetBursts(new[] { new ParticleSystem.Burst(0f, 8) });
+        em.SetBursts(new[] { new ParticleSystem.Burst(0f, (short)count) });
         var rend = go.GetComponent<ParticleSystemRenderer>();
         if (rend != null && mat != null) { rend.material = mat; rend.renderMode = ParticleSystemRenderMode.Billboard; }
         ps.Play();
