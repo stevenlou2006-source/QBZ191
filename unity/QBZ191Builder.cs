@@ -149,6 +149,21 @@ public static class QBZ191Builder
                 visual.transform.localRotation = vRot * Quaternion.Euler(VISUAL_EULER);
             }
 
+            // 枪口点：贴到模型前端（否则枪口火焰会出现在枪身中段）
+            var gunMuzzleT = FindDeep(root.transform, "Gun Muzzle");
+            if (gunMuzzleT != null && renderers.Length > 0)
+            {
+                var wb = renderers[0].bounds;
+                foreach (var r in renderers) wb.Encapsulate(r.bounds);
+                Vector3 c = root.transform.InverseTransformPoint(wb.center);
+                Vector3 s = wb.size;
+                int axis = (s.x >= s.y && s.x >= s.z) ? 0 : (s.y >= s.z ? 1 : 2);
+                Vector3 pos = c;
+                pos[axis] += s[axis] * 0.5f;
+                gunMuzzleT.localPosition = pos;
+                Debug.Log("[QBZ191] Gun Muzzle 移到模型前端: " + pos.ToString("F3") + "（最长轴=" + axis + "，尺寸=" + s.ToString("F3") + "）");
+            }
+
             // ---------- 资源 ----------
             var phys = ScriptableObject.CreateInstance<PhysAttribute>();
             phys.name = "PhysAttribute QBZ191";
