@@ -257,8 +257,8 @@ public static class QBZ191Builder
                 var emptyClip = AssetDatabase.LoadAssetAtPath<AudioClip>(GEN_DIR + "/QBZ191 Empty.wav");
                 if (shootClip != null)
                 {
-                    SetSound(gun, "soundShoot", shootClip, 0.8f);
-                    SetSound(gun, "soundShootGlobal", shootClip, 0.6f);
+                    SetSound(gun, "soundShoot", shootClip, 1f);
+                    SetSound(gun, "soundShootGlobal", shootClip, 0.75f);
                     SetSound(gun, "soundHit", emptyClip, 0.5f);
                 }
                 if (emptyClip != null) SetSound(gun, "soundNoAmmoClick", emptyClip, 0.6f);
