@@ -1,10 +1,10 @@
 {
-  "name": "QBZ191",
-  "version_number": "0.1.0",
-  "website_url": "https://github.com/stevenlou2006-source/QBZ191Simple",
-  "description": "QBZ-191 半自动步枪：可购买、可开枪、满电 30 发。依赖 REPOLib。",
-  "dependencies": [
-    "BepInEx-BepInExPack-5.4.2100",
-    "Zehs-REPOLib-4.2.0"
-  ]
+    "name":  "QBZ191",
+    "version_number":  "0.1.0",
+    "website_url":  "",
+    "description":  "QBZ-191 半自动步枪：可购买、可开枪、满电 30 发。依赖 REPOLib。",
+    "dependencies":  [
+                         "BepInEx-BepInExPack-5.4.2100",
+                         "Zehs-REPOLib-4.2.0"
+                     ]
 }
