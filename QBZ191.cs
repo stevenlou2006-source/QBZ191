@@ -18,7 +18,7 @@ namespace QBZ191
     /// 枪声已经烘焙进 QBZ191.repobundle（4.00 秒 / 48kHz / 双声道），插件不再处理声音。
     /// 只影响名字里带 QBZ191 的物品。
     /// </summary>
-    [BepInPlugin("cn_xc.QBZ191", "QBZ-191", "0.1.5")]
+    [BepInPlugin("cn_xc.QBZ191", "QBZ-191", "0.1.6")]
     public class Plugin : BaseUnityPlugin
     {
         private Harmony _harmony;
@@ -70,7 +70,9 @@ namespace QBZ191
             {
                 if (gun == null) return false;
                 string n = gun.gameObject.name;
-                return !string.IsNullOrEmpty(n) && n.IndexOf("QBZ191", StringComparison.OrdinalIgnoreCase) >= 0;
+                if (string.IsNullOrEmpty(n)) return false;
+                return n.IndexOf("QBZ191", StringComparison.OrdinalIgnoreCase) >= 0
+                    || n.IndexOf("AWP", StringComparison.OrdinalIgnoreCase) >= 0;
             }
             catch { return false; }
         }
@@ -81,7 +83,8 @@ namespace QBZ191
             {
                 int id = gun.gameObject.GetInstanceID();
                 bool first = _applied.Add(id);
-                if (!_hideBullet.Value || gun.bulletPrefab == null) return;
+                bool isAwp = gun.gameObject.name != null && gun.gameObject.name.IndexOf("AWP", StringComparison.OrdinalIgnoreCase) >= 0;
+                if (!_hideBullet.Value || isAwp || gun.bulletPrefab == null) return;   // AWP 的子弹是正常的，不要隐藏
 
                 GameObject src = gun.bulletPrefab;
                 if (first && _logPrefabs.Value)
@@ -117,13 +120,25 @@ namespace QBZ191
             catch { }
         }
 
+        private static int _semiLogCount;
+
         internal static void ShootPostfix(ItemGun __instance, bool __result)
         {
             try
             {
-                if (!IsOurGun(__instance)) return;
+                bool ours = IsOurGun(__instance);
+                ItemToggle tg = ours ? __instance.GetComponent<ItemToggle>() : null;
+                if (_semiLogCount < 20)
+                {
+                    _semiLogCount++;
+                    Log.LogInfo("[半自动诊断] gun=" + (__instance != null ? __instance.gameObject.name : "null")
+                        + " 是我们的=" + ours + " 结果=" + __result
+                        + " toggle=" + (tg != null ? tg.toggleState.ToString() : "null")
+                        + " 方法=" + (_toggleItem != null ? "有" : "缺"));
+                }
+                if (!ours) return;
                 if (!__result) return;
-                ItemToggle toggle = __instance.GetComponent<ItemToggle>();
+                ItemToggle toggle = tg;
                 if (toggle == null || !toggle.toggleState) return;
                 int viewId = 0;
                 try { if (_localViewId != null) viewId = (int)_localViewId.Invoke(null, null); } catch { }
